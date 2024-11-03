@@ -17,6 +17,8 @@ export const metadata = {
   title: "Mediswift || Your health best friend ",
   description: "",
 };
+<link rel="icon" href="/favicon.png" sizes="any" />
+
 
 export default function RootLayout({ children }) {
   return (
