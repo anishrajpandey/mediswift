@@ -6,6 +6,7 @@ const page = () => {
     <>
     <Navbar/>
     <DoctorList/>
+    
     </>
   )
 }
