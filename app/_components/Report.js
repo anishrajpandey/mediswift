@@ -91,7 +91,71 @@ export default function PatientReport() {
   };
 
   if (!treatment) {
-    return <p>No report to show</p>; // Show loading while data is being fetched
+    return   (    <div className="p-8 bg-gray-100 min-h-screen">
+      <div className="bg-white p-8 rounded-md shadow-md max-w-3xl mx-auto">
+        <header className="flex items-center justify-between mb-8">
+          <div className="flex items-center justify-between w-full space-x-4">
+            <div className="w-full">
+              <h2 className="text-xs">Name</h2>
+              <p className="border-b border-gray-300 pb-1">Richard Esselman</p>
+            </div>
+            <div className="w-full">
+              <h2 className="text-xs">Date of Birth</h2>
+              <p className="border-b border-gray-300 pb-1">Jan 1ˢᵗ, 1989</p>
+            </div>
+            <div className="w-full">
+              <h2 className="text-xs">Sex</h2>
+              <p className="border-b border-gray-300 pb-1 ">Male</p>
+            </div>
+          </div>
+        </header>
+
+        <div className="mb-6">
+          <h2 className="text-xs">Date of Illness</h2>
+          <p className="border-b border-gray-300 pb-1">Nov 3ʳᵈ, 2024</p>
+        </div>
+
+        <div className="mb-6">
+          <h2 className="text-xs">Symptoms</h2>
+          <p className="border-b border-gray-300 pb-1">
+            Stomach ache with fever of 102°F. Patient also reported his blood
+            pressure to be 110/68. Absence of body pain and muscle pain.
+          </p>
+        </div>
+
+        <div className="mb-6">
+          <h2 className="text-xs">Active Allergies</h2>
+          <p className="border-b border-gray-300 pb-1">
+            Patient has dust allergy. Upon exposure has bouts of sneezing and
+            rashes.
+          </p>
+        </div>
+
+        <div className="mb-6">
+          <h2 className="text-xs">Current Medication</h2>
+          <p className="border-b border-gray-300 pb-1">Vitamin D Tablet. 6000 IU, Once a month.</p>
+        </div>
+
+        <div className="mb-6">
+          <h2 className="text-xs">Diagnosis</h2>
+          <p className="border border-gray-300 p-2 rounded-md">
+            Patient seems to have a case of food poisoning.
+          </p>
+        </div>
+        <button
+              onClick={addMedication}
+              className="flex items-center space-x-2 text-green-600 font-semibold mt-2"
+            >
+              <span>➕</span> <span>Add Medication</span>
+            </button>
+
+        <div className="flex space-x-4">
+          <button className="bg-green-600 text-white px-6 py-2 rounded-md">
+Prescribe Medication          </button>
+        
+        </div>
+      </div>
+    </div>) // Show loading while data is being fetched
   }
 
   return (
