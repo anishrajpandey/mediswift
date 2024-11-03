@@ -9,7 +9,7 @@ const Navbar = () => {
 
     <div className='flex flex-row justify-between py-8 items-center px-12 ' >
 
-        <Image src={'/logo.svg'} width={64} height={64} alt='logo' className=''/>   
+       <Link href={'/'}><Image src={'/logo.svg'} width={64} height={64} alt='logo' className=''/>   </Link> 
         
          <div className='flex items-center'> 
 

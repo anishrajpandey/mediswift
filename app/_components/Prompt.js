@@ -2,10 +2,12 @@
 
 import { useState, useRef } from 'react';
 import Image from 'next/image';
+import axiosInstance from '../helper/base_api';
 
-export default function StyledPrompt({ onSubmit }) {
+export default function StyledPrompt({ onToggle, toggle }) { // Accept onToggle as a prop
   const [inputValue, setInputValue] = useState('');
-  const fileInputRef = useRef(null); 
+  const fileInputRef = useRef(null);
+
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
   };
@@ -19,19 +21,39 @@ export default function StyledPrompt({ onSubmit }) {
   };
 
   const handlePaperclipClick = () => {
-    fileInputRef.current.click(); 
+    fileInputRef.current.click();
   };
 
-  const handleSubmit = () => {
+  const submitQuery = async () => {
+    return await axiosInstance.post(
+      '/v01/api/query/process_chat/',
+      { query: inputValue },
+      {
+        headers: {
+          'accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+  };
+
+  const handleSubmit = async () => {
     if (inputValue.trim()) {
-      onSubmit(inputValue); 
-      setInputValue(''); 
+      const response = await submitQuery();
+      console.log("Server response:", response.data);
+
+      if (response.data.success) {
+        // Pass response text to the parent component
+        onToggle(prev => !prev); // Toggle the value using a callback function
+      }
+      setInputValue(''); // Clear input field
+
     }
   };
 
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
-      handleSubmit(); 
+      handleSubmit();
     }
   };
 
@@ -41,9 +63,9 @@ export default function StyledPrompt({ onSubmit }) {
         src={'/paperclip.svg'}
         width={50}
         height={50}
-        alt={"paperclip icon"}
+        alt="Attach file"
         onClick={handlePaperclipClick}
-        style={{ cursor: 'pointer' }}
+        style={styles.icon}
       />
       <input
         type="file"
@@ -56,12 +78,16 @@ export default function StyledPrompt({ onSubmit }) {
         type="text"
         value={inputValue}
         onChange={handleInputChange}
-        onKeyDown={handleKeyDown} 
+        onKeyDown={handleKeyDown}
         placeholder="How are you feeling today?"
         style={styles.input}
       />
-      <button onClick={handleSubmit} style={styles.sendButton}>
-        <Image src={'/send.svg'} width={40} height={40} alt={"send icon"} />
+      <button
+        onClick={handleSubmit}
+        style={styles.sendButton}
+        disabled={!inputValue.trim()}
+      >
+        <Image src={'/send.svg'} width={40} height={40} alt="Send message" style={styles.icon} />
       </button>
     </div>
   );
@@ -92,11 +118,14 @@ const styles = {
     backgroundColor: 'transparent',
     border: 'none',
     cursor: 'pointer',
-    padding: '0', 
+    padding: '0',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    width: '40px', 
-    height: '40px', 
+    width: '40px',
+    height: '40px',
+  },
+  icon: {
+    cursor: 'pointer',
   },
 };
